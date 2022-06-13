@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,10 +15,12 @@ namespace Infrastructure.Data
 
         public async Task<Product> GetProductbyIdAsync(int id)
         {
+#pragma warning disable CS8603 // Possible null reference return.
             return await _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductBrand)
                 .FirstOrDefaultAsync(p => p.Id == id);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
